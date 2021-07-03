@@ -9,7 +9,13 @@ class Article(models.Model):
     article_text = models.TextField("Article Body")
     pub_date = models.DateTimeField("Date of publication")
 
+    def __str__(self):
+        return self.article_title
+
 class Comment(models.Model):
     article = models.ForeignKey(Article, on_delete = models.CASCADE)
     author_name = models.CharField('Author', max_length = 50)
     comment_text = models.CharField("Comment Body", max_length = 200)
+
+    def __str__(self):
+        return self.author_name
