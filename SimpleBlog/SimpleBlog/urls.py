@@ -6,7 +6,7 @@ from datetime import datetime
 from django.urls import path
 from django.contrib import admin
 from django.contrib.auth.views import LoginView, LogoutView
-from Blog import forms, views
+from app import forms, views
 
 
 urlpatterns = [
