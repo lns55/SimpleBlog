@@ -10,12 +10,32 @@
 
 	<em>{{article.pub_date}}</em>
 
+	{% if article.was_published_recently %}
+	
+		THIS IS NEW ONE
+	
+	{% endif %}
+
 	<hr>
 
+	{% if latest_comments_list  %}
+		
+		{% for comment in latest_comments_list %}
+			<p>
+				<strong>{{comment.author_name}}</strong>
+				<p>{{comment.comment_text}}</p>
+			</p>
+		{% endfor %}
+
+	{% else %}
+	There is no comments yet
+	{% endif %}
 
 	<hr>
 
 	<form action="{% url 'leave_comment' article.id %}" method="post">
+
+		{% csrf_token %}
 	
 		<input type="text" required placeholder="Your name" name="name"><br>
 

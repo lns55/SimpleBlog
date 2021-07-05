@@ -5,7 +5,8 @@ Definition of views.
 from datetime import datetime
 from django.shortcuts import render
 from django.http import HttpRequest, Http404, HttpResponseRedirect
-from .models import Article, Comment
+from django.urls import reverse
+from .models import Article
 
 def home(request):
     """Renders the home page."""
@@ -26,10 +27,20 @@ def detail(request, article_id):
         a = Article.objects.get( id = article_id )
     except:
         raise Http404("Article Not Found")
-    return render(request, 'app/detail.html', {'article': a})
+
+    latest_comments_list = a.comment_set.order_by('-id')[:10]
+
+    return render(request, 'app/detail.html', {'article': a, 'latest_comments_list':latest_comments_list,})
 
 def leave_comment(request, article_id):
-    pass
+    try:
+        a = Article.objects.get( id = article_id )
+    except:
+        raise Http404("Article Not Found")
+
+    a.comment_set.create(author_name = request.POST['name'], comment_text = request.POST['text'])
+
+    return HttpResponseRedirect( reverse('detail', args = (a.id,)) )
 
 def contact(request):
     """Renders the contact page."""
