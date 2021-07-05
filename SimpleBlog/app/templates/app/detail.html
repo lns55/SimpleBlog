@@ -1,0 +1,29 @@
+{% extends "app/layout.html" %}
+
+
+{% block title %}{{article.article_title}}{% endblock %}
+ 
+{% block content %}
+	<h2>{{article.article_title}}<h2>
+
+	<p>{{article.article_text}}<p>
+
+	<em>{{article.pub_date}}</em>
+
+	<hr>
+
+
+	<hr>
+
+	<form action="{% url 'leave_comment' article.id %}" method="post">
+	
+		<input type="text" required placeholder="Your name" name="name"><br>
+
+		<textarea name="text" required placeholder="Leave a comment" cols="30" rows="10"></textarea><br>
+
+		<button type="submit">Submit</button>
+
+	</form>
+	
+{% endblock %}
+
